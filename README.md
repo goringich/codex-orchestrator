@@ -8,6 +8,7 @@ User-level orchestration layer for Codex workers on this machine.
 - integrate with the existing Hyprland/Rofi/system-bootstrap workflow
 
 ## Components
+- `bin/codex` - orchestration-aware wrapper for the user-facing `codex` command
 - `bin/codex-agent-enqueue`
 - `bin/codex-agent-run`
 - `bin/codex-agent-status`
@@ -24,6 +25,7 @@ cd ~/codex-orchestrator
 ```
 
 This installs:
+- `codex` wrapper into `~/.local/bin` so future shell sessions hit the orchestrated entrypoint first
 - scripts into `~/.local/bin`
 - config into `~/.config/codex-orchestrator`
 - user systemd units into `~/.config/systemd/user`
@@ -41,9 +43,18 @@ This installs:
 ## Usage
 
 ```bash
+codex
+codex queue-status
+codex queue-add --title "next-pass" --workdir ~/system-bootstrap < prompt.txt
 codex-agent-status
 codex-agent-enqueue --title "next-pass" --workdir ~/system-bootstrap < prompt.txt
 codex-agent-run
 ```
 
 The timer can also process queued tasks automatically.
+
+## Session Default
+
+`install.sh` places a `codex` wrapper into `~/.local/bin/codex`.
+
+That makes new interactive shell sessions resolve `codex` through this repo first, while still delegating actual interactive work to the real CLI at `/usr/bin/codex`.

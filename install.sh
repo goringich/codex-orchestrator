@@ -3,6 +3,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 TARGET_HOME="${TARGET_HOME:-$HOME}"
+ENABLE_TIMER="${CODEX_ORCHESTRATOR_ENABLE_TIMER:-1}"
 
 install -d -m 755 \
   "$TARGET_HOME/.local/bin" \
@@ -19,6 +20,7 @@ install -d -m 755 \
 install -m 755 "$REPO_ROOT/bin/codex-agent-run" "$TARGET_HOME/.local/bin/codex-agent-run"
 install -m 755 "$REPO_ROOT/bin/codex-agent-enqueue" "$TARGET_HOME/.local/bin/codex-agent-enqueue"
 install -m 755 "$REPO_ROOT/bin/codex-agent-status" "$TARGET_HOME/.local/bin/codex-agent-status"
+install -m 755 "$REPO_ROOT/bin/codex" "$TARGET_HOME/.local/bin/codex"
 
 install -m 644 "$REPO_ROOT/config/manager-prompt.txt" "$TARGET_HOME/.config/codex-orchestrator/manager-prompt.txt"
 
@@ -32,7 +34,7 @@ install -m 644 "$REPO_ROOT/applications/codex-agent-orchestrator-run.desktop" \
 install -m 644 "$REPO_ROOT/applications/codex-agent-orchestrator-status.desktop" \
   "$TARGET_HOME/.local/share/applications/codex-agent-orchestrator-status.desktop"
 
-if [[ "${TARGET_HOME}" == "${HOME}" ]] && command -v systemctl >/dev/null 2>&1; then
+if [[ "${ENABLE_TIMER}" == "1" && "${TARGET_HOME}" == "${HOME}" ]] && command -v systemctl >/dev/null 2>&1; then
   systemctl --user daemon-reload
   systemctl --user enable --now codex-agent-orchestrator.timer
 fi

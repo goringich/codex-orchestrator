@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REAL_CODEX="${REAL_CODEX_BIN:-/usr/bin/codex}"
+
+if [[ ! -x "$REAL_CODEX" ]]; then
+  echo "Real codex binary not found at $REAL_CODEX" >&2
+  exit 1
+fi
+
+command -v codex-obsidian-sync >/dev/null 2>&1 || true
+
+subcommand="${1:-}"
+case "$subcommand" in
+  queue-add)
+    shift
+    exec "$HOME/.local/bin/codex-agent-enqueue" "$@"
+    ;;
+  queue-run)
+    shift
+    exec "$HOME/.local/bin/codex-agent-run" "$@"
+    ;;
+  queue-status)
+    shift
+    exec "$HOME/.local/bin/codex-agent-status" "$@"
+    ;;
+esac
+
+command -v codex-obsidian-sync >/dev/null 2>&1 || true
+"$REAL_CODEX" "$@"
+rc=$?
+command -v codex-obsidian-sync >/dev/null 2>&1 || true
+exit "$rc"

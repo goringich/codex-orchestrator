@@ -1,0 +1,22 @@
+title: bootstrap-hardening-next-pass
+workdir: /home/goringich/system-bootstrap
+sandbox: workspace-write
+add_dir: /home/goringich
+---
+Continue improving the one-command and ISO restore system conservatively.
+
+Focus only on safe, incremental work inside the existing repositories already used for this machine:
+- /home/goringich/system-bootstrap
+- /home/goringich/custom-cachyos-iso
+- /home/goringich/Desktop/Obsidian
+
+Goals:
+1. Inspect remaining gaps for near-unattended restore.
+2. Prefer docs, dry-runs, profile cleanup, verification scripts, or first-boot finishing logic.
+3. If you change architecture or restore flow, update System Blueprint.
+4. Commit verified changes in the relevant repository.
+
+Avoid:
+- destructive actions
+- rewriting the whole installer
+- touching unrelated user notes

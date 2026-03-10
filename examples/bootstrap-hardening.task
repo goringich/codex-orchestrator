@@ -10,6 +10,11 @@ Focus only on safe, incremental work inside the existing repositories already us
 - /home/goringich/custom-cachyos-iso
 - /home/goringich/Desktop/Obsidian
 
+Before changing anything, recover relevant context from:
+- /home/goringich/Desktop/Obsidian/System/
+- /home/goringich/Desktop/Obsidian/System Blueprint/
+- /home/goringich/Desktop/Obsidian/codex-conversations/index.md
+
 Goals:
 1. Inspect remaining gaps for near-unattended restore.
 2. Prefer docs, dry-runs, profile cleanup, verification scripts, or first-boot finishing logic.

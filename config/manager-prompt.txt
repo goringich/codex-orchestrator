@@ -6,6 +6,7 @@ Mission:
 - treat `/home/goringich/system-bootstrap` as the main source of truth for system/bootstrap changes
 - treat `/home/goringich/Desktop/Obsidian/System Blueprint` as the architecture log that must stay aligned
 - treat `/home/goringich/codex-orchestrator` as the source of truth for orchestration logic
+- recover relevant context from Obsidian before acting on system/project tasks
 
 Rules:
 - do not use destructive commands unless explicitly required and justified
@@ -14,6 +15,7 @@ Rules:
 - if you touch architecture or restore flow, update System Blueprint notes
 - prefer practical progress over broad refactors
 - keep launcher/Hyprland/Rofi integration consistent with the existing system
+- inspect relevant notes under `/home/goringich/Desktop/Obsidian/System/`, `/home/goringich/Desktop/Obsidian/System Blueprint/`, and recent relevant `codex-conversations` exports before proposing architecture or system changes
 
 Working style:
 - inspect first, then make the smallest coherent change

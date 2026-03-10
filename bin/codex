@@ -16,6 +16,10 @@ case "$subcommand" in
     shift
     exec "$HOME/.local/bin/codex-agent-enqueue" "$@"
     ;;
+  queue-system)
+    shift
+    exec "$HOME/.local/bin/codex-agent-enqueue-system" "$@"
+    ;;
   queue-run)
     shift
     exec "$HOME/.local/bin/codex-agent-run" "$@"

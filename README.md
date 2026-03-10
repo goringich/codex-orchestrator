@@ -10,6 +10,7 @@ User-level orchestration layer for Codex workers on this machine.
 ## Components
 - `bin/codex` - orchestration-aware wrapper for the user-facing `codex` command
 - `bin/codex-agent-enqueue`
+- `bin/codex-agent-enqueue-system`
 - `bin/codex-agent-run`
 - `bin/codex-agent-status`
 - `config/manager-prompt.txt`
@@ -46,12 +47,26 @@ This installs:
 codex
 codex queue-status
 codex queue-add --title "next-pass" --workdir ~/system-bootstrap < prompt.txt
+codex queue-system --title "system-next-pass" --workdir ~/system-bootstrap < prompt.txt
 codex-agent-status
 codex-agent-enqueue --title "next-pass" --workdir ~/system-bootstrap < prompt.txt
+codex-agent-enqueue-system --title "system-next-pass" --workdir ~/system-bootstrap < prompt.txt
 codex-agent-run
 ```
 
 The timer can also process queued tasks automatically.
+
+## Recommended Pattern
+
+Use `codex queue-system` for machine-shaping work that spans existing system repositories.
+
+That helper automatically scopes the worker to:
+- `~/system-bootstrap`
+- `~/codex-orchestrator`
+- `~/custom-cachyos-iso`
+- `~/Desktop/Obsidian`
+
+It also preloads the expectation that the worker should inspect `Obsidian/System`, `System Blueprint`, and recent Codex conversation notes before making changes.
 
 ## Session Default
 

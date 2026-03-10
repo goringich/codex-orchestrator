@@ -19,6 +19,7 @@ install -d -m 755 \
 
 install -m 755 "$REPO_ROOT/bin/codex-agent-run" "$TARGET_HOME/.local/bin/codex-agent-run"
 install -m 755 "$REPO_ROOT/bin/codex-agent-enqueue" "$TARGET_HOME/.local/bin/codex-agent-enqueue"
+install -m 755 "$REPO_ROOT/bin/codex-agent-enqueue-system" "$TARGET_HOME/.local/bin/codex-agent-enqueue-system"
 install -m 755 "$REPO_ROOT/bin/codex-agent-status" "$TARGET_HOME/.local/bin/codex-agent-status"
 install -m 755 "$REPO_ROOT/bin/codex" "$TARGET_HOME/.local/bin/codex"
 

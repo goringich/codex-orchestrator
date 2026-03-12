@@ -2,36 +2,53 @@
 set -euo pipefail
 
 REAL_CODEX="${REAL_CODEX_BIN:-/usr/bin/codex}"
+owner_home="${CODEX_OWNER_HOME:-${HOME:-/home/goringich}}"
+
+if [[ "$(id -u)" -eq 0 ]]; then
+  owner_user="${SUDO_USER:-${USER:-goringich}}"
+  if owner_entry="$(getent passwd "$owner_user" 2>/dev/null)"; then
+    owner_home="$(cut -d: -f6 <<<"$owner_entry")"
+  fi
+
+  export HOME="$owner_home"
+  export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$owner_home/.config}"
+  export XDG_DATA_HOME="${XDG_DATA_HOME:-$owner_home/.local/share}"
+  export XDG_STATE_HOME="${XDG_STATE_HOME:-$owner_home/.local/state}"
+  export CODEX_OWNER_HOME="$owner_home"
+fi
+
+user_local_bin="${owner_home}/.local/bin"
+sync_cmd="${user_local_bin}/codex-obsidian-sync"
 
 if [[ ! -x "$REAL_CODEX" ]]; then
   echo "Real codex binary not found at $REAL_CODEX" >&2
   exit 1
 fi
 
-command -v codex-obsidian-sync >/dev/null 2>&1 || true
+[[ -x "$sync_cmd" ]] && "$sync_cmd" >/dev/null 2>&1 || true
 
 subcommand="${1:-}"
 case "$subcommand" in
   queue-add)
     shift
-    exec "$HOME/.local/bin/codex-agent-enqueue" "$@"
+    exec "${user_local_bin}/codex-agent-enqueue" "$@"
     ;;
   queue-system)
     shift
-    exec "$HOME/.local/bin/codex-agent-enqueue-system" "$@"
+    exec "${user_local_bin}/codex-agent-enqueue-system" "$@"
     ;;
   queue-run)
     shift
-    exec "$HOME/.local/bin/codex-agent-run" "$@"
+    exec "${user_local_bin}/codex-agent-run" "$@"
     ;;
   queue-status)
     shift
-    exec "$HOME/.local/bin/codex-agent-status" "$@"
+    exec "${user_local_bin}/codex-agent-status" "$@"
     ;;
 esac
 
-command -v codex-obsidian-sync >/dev/null 2>&1 || true
+[[ -x "$sync_cmd" ]] && "$sync_cmd" >/dev/null 2>&1 || true
 "$REAL_CODEX" "$@"
 rc=$?
-command -v codex-obsidian-sync >/dev/null 2>&1 || true
+[[ -x "$sync_cmd" ]] && "$sync_cmd" >/dev/null 2>&1 || true
 exit "$rc"
